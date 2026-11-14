@@ -1,5 +1,5 @@
 ---
-name: revisor-acessibilidade
+name: accessibility-reviewer
 description: Digital accessibility reviewer based on WCAG 2.2 level AA. Use when the user asks for an accessibility review of screens, flows, Figma links, images or front-end code.
 disallowedTools: Write, Edit, NotebookEdit, Bash, PowerShell
 ---

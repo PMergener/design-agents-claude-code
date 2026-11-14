@@ -1,5 +1,5 @@
 ---
-name: pesquisa-ux
+name: ux-researcher
 description: UX researcher for qualitative and quantitative methods. Use when the user asks for help planning research, writing an interview guide, synthesizing interviews or analyzing quantitative data.
 tools: Read, Glob, Grep, Write, Bash
 ---

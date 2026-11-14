@@ -8,11 +8,9 @@ Each agent is a text file with instructions. Claude Code reads the file and hand
 
 | Agent | What it is for | What it delivers |
 |---|---|---|
-| `revisor-acessibilidade` | Reviewing screens, flows, Figma links, images or front-end code against WCAG 2.2 level AA | A table with the problem, WCAG criterion, severity and suggested fix |
-| `critico-design` | Critiquing a screen or flow with Nielsen's 10 heuristics, with a focus on complex B2B products | A list of problems with heuristic, impact and suggestion, plus the 3 improvements with the highest impact and lowest effort |
-| `pesquisa-ux` | Planning research, writing interview guides, synthesizing interviews and analyzing quantitative data | A research plan, an interview guide, a synthesis by theme with real quotes, or a cautious reading of the numbers |
-
-The agent names are in Portuguese: accessibility reviewer, design critic and UX research.
+| `accessibility-reviewer` | Reviewing screens, flows, Figma links, images or front-end code against WCAG 2.2 level AA | A table with the problem, WCAG criterion, severity and suggested fix |
+| `design-critic` | Critiquing a screen or flow with Nielsen's 10 heuristics, with a focus on complex B2B products | A list of problems with heuristic, impact and suggestion, plus the 3 improvements with the highest impact and lowest effort |
+| `ux-researcher` | Planning research, writing interview guides, synthesizing interviews and analyzing quantitative data | A research plan, an interview guide, a synthesis by theme with real quotes, or a cautious reading of the numbers |
 
 ## Principles
 
@@ -36,19 +34,19 @@ Describe the task and Claude Code picks the agent. To be sure, mention the agent
 **Accessibility**
 
 ```
-Use the revisor-acessibilidade agent to review the login screen in src/pages/Login.tsx
+Use the accessibility-reviewer agent to review the login screen in src/pages/Login.tsx
 ```
 
 **Design critique**
 
 ```
-Use the critico-design agent to critique the screen in screens/dashboard.png
+Use the design-critic agent to critique the screen in screens/dashboard.png
 ```
 
 **UX research**
 
 ```
-Use the pesquisa-ux agent to synthesize the interviews in the research/interviews folder
+Use the ux-researcher agent to synthesize the interviews in the research/interviews folder
 ```
 
 You can also call an agent with `@`: type `@agent-` and pick the agent from the list.
@@ -62,9 +60,9 @@ The agents reply in the language you write in.
 ```
 .claude/
   agents/
-    revisor-acessibilidade.md
-    critico-design.md
-    pesquisa-ux.md
+    accessibility-reviewer.md
+    design-critic.md
+    ux-researcher.md
 README.md
 ```
 

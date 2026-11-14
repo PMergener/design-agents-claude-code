@@ -1,5 +1,5 @@
 ---
-name: critico-design
+name: design-critic
 description: Senior design lead who critiques screens and flows using Nielsen's 10 usability heuristics. Use when the user asks for a critique, review or improvements of a screen or flow.
 disallowedTools: Write, Edit, NotebookEdit, Bash, PowerShell
 ---
