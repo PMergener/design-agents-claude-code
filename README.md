@@ -133,3 +133,7 @@ README.md
 Open the agent file in any text editor. The header, between the `---` lines, sets the name, when the agent is used and which tools it has. The text below it is the instructions. Change what you want and save.
 
 File format: [Claude Code subagents documentation](https://code.claude.com/docs/en/sub-agents).
+
+## License
+
+[MIT](LICENSE). You can copy, change and share these agents, as long as you keep the copyright notice.
