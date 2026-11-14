@@ -1,59 +1,63 @@
-# Agentes de Design para o Claude Code
+# Design Agents for Claude Code
 
-Três subagentes do [Claude Code](https://claude.com/claude-code) para o dia a dia de Product Design: revisão de acessibilidade, crítica de design e pesquisa de UX.
+Three [Claude Code](https://claude.com/claude-code) subagents for day-to-day Product Design work: accessibility review, design critique and UX research.
 
-Cada agente é um arquivo de texto com instruções. O Claude Code lê o arquivo e passa a tarefa para o agente certo quando você pede.
+Each agent is a text file with instructions. Claude Code reads the file and hands the task to the right agent when you ask.
 
-## Os agentes
+## The agents
 
-| Agente | Para que serve | O que entrega |
+| Agent | What it is for | What it delivers |
 |---|---|---|
-| `revisor-acessibilidade` | Revisar telas, fluxos, links do Figma, imagens ou código front-end com base na WCAG 2.2 nível AA | Tabela com problema, critério WCAG, gravidade e sugestão de correção |
-| `critico-design` | Criticar uma tela ou fluxo com as 10 heurísticas de Nielsen, com foco em produtos B2B complexos | Lista de problemas com heurística, impacto e sugestão, mais as 3 melhorias de maior impacto e menor esforço |
-| `pesquisa-ux` | Planejar pesquisa, montar roteiro de entrevista, sintetizar entrevistas e analisar dados quantitativos | Plano de pesquisa, roteiro, síntese por temas com citações reais ou leitura cautelosa dos números |
+| `revisor-acessibilidade` | Reviewing screens, flows, Figma links, images or front-end code against WCAG 2.2 level AA | A table with the problem, WCAG criterion, severity and suggested fix |
+| `critico-design` | Critiquing a screen or flow with Nielsen's 10 heuristics, with a focus on complex B2B products | A list of problems with heuristic, impact and suggestion, plus the 3 improvements with the highest impact and lowest effort |
+| `pesquisa-ux` | Planning research, writing interview guides, synthesizing interviews and analyzing quantitative data | A research plan, an interview guide, a synthesis by theme with real quotes, or a cautious reading of the numbers |
 
-## Princípios
+The agent names are in Portuguese: accessibility reviewer, design critic and UX research.
 
-- **Sem invenção.** O revisor de acessibilidade só cita critérios que existem na WCAG 2.2. O pesquisador nunca cria dados nem citações.
-- **Evidência separada de hipótese.** O que veio do material e o que é interpretação aparecem marcados.
-- **Limites declarados.** Cada agente diz o que não conseguiu verificar com o material recebido.
-- **Só leitura na revisão.** Os agentes de acessibilidade e de crítica não alteram arquivos.
+## Principles
 
-## Como instalar
+- **No invention.** The accessibility reviewer only cites criteria that exist in WCAG 2.2. The researcher never makes up data or quotes.
+- **Evidence kept apart from hypothesis.** What came from the material and what is interpretation are marked.
+- **Stated limits.** Each agent says what it could not verify with the material it received.
+- **Read-only reviews.** The accessibility and critique agents do not change files.
 
-1. Baixe este repositório.
-2. Copie os três arquivos da pasta `.claude/agents/` para um destes lugares:
-   - **Um projeto só:** a pasta `.claude/agents/` dentro do projeto.
-   - **Todos os seus projetos:** a pasta `.claude/agents/` do seu usuário. No Windows, `C:\Users\SEU_USUARIO\.claude\agents\`. No Mac e no Linux, `~/.claude/agents/`.
-3. Feche e abra o Claude Code.
+## How to install
 
-## Como usar
+1. Download this repository.
+2. Copy the three files from the `.claude/agents/` folder to one of these places:
+   - **A single project:** the `.claude/agents/` folder inside the project.
+   - **All your projects:** the `.claude/agents/` folder of your user. On Windows, `C:\Users\YOUR_USER\.claude\agents\`. On Mac and Linux, `~/.claude/agents/`.
+3. Close and reopen Claude Code.
 
-Descreva a tarefa e o Claude Code escolhe o agente. Para garantir, cite o nome do agente.
+## How to use
 
-**Acessibilidade**
+Describe the task and Claude Code picks the agent. To be sure, mention the agent by name.
 
-```
-Use o agente revisor-acessibilidade para revisar a tela de login em src/pages/Login.tsx
-```
-
-**Crítica de design**
+**Accessibility**
 
 ```
-Use o agente critico-design para criticar a tela em telas/dashboard.png
+Use the revisor-acessibilidade agent to review the login screen in src/pages/Login.tsx
 ```
 
-**Pesquisa de UX**
+**Design critique**
 
 ```
-Use o agente pesquisa-ux para sintetizar as entrevistas da pasta pesquisa/entrevistas
+Use the critico-design agent to critique the screen in screens/dashboard.png
 ```
 
-Também dá para chamar com `@`: digite `@agent-` e escolha o agente na lista.
+**UX research**
 
-Para revisar uma imagem, salve o arquivo em uma pasta e informe o caminho.
+```
+Use the pesquisa-ux agent to synthesize the interviews in the research/interviews folder
+```
 
-## Estrutura
+You can also call an agent with `@`: type `@agent-` and pick the agent from the list.
+
+To review an image, save the file in a folder and give its path.
+
+The agents reply in the language you write in.
+
+## Structure
 
 ```
 .claude/
@@ -64,8 +68,8 @@ Para revisar uma imagem, salve o arquivo em uma pasta e informe o caminho.
 README.md
 ```
 
-## Como adaptar
+## How to adapt
 
-Abra o arquivo do agente em qualquer editor de texto. O cabeçalho, entre as linhas `---`, define o nome, quando o agente é usado e quais ferramentas ele tem. O texto abaixo são as instruções. Mude o que quiser e salve.
+Open the agent file in any text editor. The header, between the `---` lines, sets the name, when the agent is used and which tools it has. The text below it is the instructions. Change what you want and save.
 
-Formato dos arquivos: [documentação de subagentes do Claude Code](https://code.claude.com/docs/en/sub-agents).
+File format: [Claude Code subagents documentation](https://code.claude.com/docs/en/sub-agents).
