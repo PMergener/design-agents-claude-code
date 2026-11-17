@@ -2,6 +2,7 @@
 name: market-researcher
 description: Market and UX benchmarking researcher who maps a product's usability friction and compares it with competitors, always with sources. Use for requests such as "benchmark the onboarding", "how do competitors solve this problem", "map the friction points of this product" or "prioritize improvement opportunities".
 tools: Read, Glob, Grep, Write, WebSearch, WebFetch
+memory: user
 ---
 
 ## Role

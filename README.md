@@ -1,6 +1,6 @@
 # Design Agents for Claude Code
 
-Seven [Claude Code](https://claude.com/claude-code) subagents for day-to-day Product Design work: wireframing, design systems, market research, retention research, accessibility review, design critique and UX research.
+Nine [Claude Code](https://claude.com/claude-code) subagents for day-to-day Product Design work: wireframing, design systems, design tokens, market research, retention research, accessibility review, design critique, UX research and project documentation.
 
 Each agent is a text file with instructions. Claude Code reads the file and hands the task to the right agent when you ask.
 
@@ -12,6 +12,8 @@ Each agent is a text file with instructions. Claude Code reads the file and hand
 | `system-designer` | Auditing, extending or creating a design system | Tokens in JSON and CSS variables, component documentation and a changelog |
 | `market-researcher` | Mapping a product's usability friction and benchmarking how competitors solve it | A report with friction map, benchmark table, prioritized opportunities and linked sources |
 | `leadmaker` | Turning interview transcripts into leads for engaging and retaining customers | A qualitative report and a list of leads, each with evidence, hypothesis and how to validate |
+| `token-generator` | Turning a design system into tokens and sending them to Figma and Notion every time the system changes | Tokens in JSON, CSS variables and a Markdown table, plus Figma variables and a Notion reference page for developers |
+| `documenter` | Documenting a whole agent pipeline, from start to finish, as a report and/or a presentation | A report and/or a presentation, saved to files and published in Notion, Figma, FigJam or Obsidian |
 | `accessibility-reviewer` | Reviewing screens, flows, Figma links, images or front-end code against WCAG 2.2 level AA | A table with the problem, WCAG criterion, severity and suggested fix |
 | `design-critic` | Critiquing a screen or flow with Nielsen's 10 heuristics, with a focus on complex B2B products | A list of problems with heuristic, impact and suggestion, plus the 3 improvements with the highest impact and lowest effort |
 | `ux-researcher` | Planning research, writing interview guides, synthesizing interviews and analyzing quantitative data | A research plan, an interview guide, a synthesis by theme with real quotes, or a cautious reading of the numbers |
@@ -24,10 +26,15 @@ An agent cannot call another agent. Each one ends its reply with a "Next step" t
 flowchart LR
     lm[leadmaker] -->|hypotheses| mr[market-researcher]
     mr -->|opportunities| wf[wireframer]
-    sd[system-designer] -->|tokens and components| wf
+    sd[system-designer] -->|design system| tg[token-generator]
+    tg -->|tokens| wf
     wf -->|screens| dc[design-critic]
     wf -->|screens| ar[accessibility-reviewer]
+    dc --> doc[documenter]
+    ar --> doc
 ```
+
+`documenter` can run at any point to record what the other agents did.
 
 ## Principles
 
@@ -37,6 +44,7 @@ flowchart LR
 - **Questions before assumptions.** `wireframer`, `system-designer`, `market-researcher` and `leadmaker` ask for the niche, the audience and the platform when you have not stated them, with at most 3 questions.
 - **Stated limits.** Each agent says what it could not verify with the material it received.
 - **Read-only reviews.** The accessibility and critique agents do not change files.
+- **Memory of your feedback.** Every agent has its own memory. `token-generator` and `documenter` ask whether you liked each delivery and save your answer; the others keep what you tell them about their work. Next time, they repeat what you approved and avoid what you rejected.
 
 ## How to use each agent, explained for a 10-year-old
 
@@ -74,6 +82,22 @@ Imagine several friends stopped coming to your club. You talked to each one and 
 Use the leadmaker agent to analyze the transcripts in research/interviews, with the interview guide in research/guide.md. Niche: fitness. Audience: subscribers who cancelled in the last 3 months. Platform: mobile.
 ```
 
+### token-generator
+
+Imagine the design system is a bakery's recipe book. This agent copies the recipes in two versions: big posters for the people who decorate the cakes (Figma) and recipe cards for the people who bake (Notion). When someone changes a recipe, it updates the posters and the cards together, so nobody uses the old version.
+
+```
+Use the token-generator agent with the design system in outputs/system-designer/. Figma: https://www.figma.com/design/... Notion: https://www.notion.so/...
+```
+
+### documenter
+
+Imagine a school field trip. Each classmate took care of one part: one planned the route, another took the photos, another wrote down what they learned. This agent puts it all together in a trip diary, in the right order, and also builds the presentation to show in class. If nobody wrote down a part, it says so instead of making it up.
+
+```
+Use the documenter agent to document the project in projects/real-estate/outputs. Destination: Notion, https://www.notion.so/... Format: a report and a 10-minute presentation for leadership.
+```
+
 ### accessibility-reviewer
 
 Imagine a playground. Some kids use wheelchairs, some cannot see well, some cannot use a mouse. This agent walks around checking that everyone can get in and play: is the sign readable, is the button big enough, can you get around using only the keyboard. Then it hands you a list of what to fix first.
@@ -103,7 +127,9 @@ Use the ux-researcher agent to synthesize the interviews in the research/intervi
 - You can also call an agent with `@`: type `@agent-` and pick the agent from the list.
 - To work from an image, save the file in a folder and give its path.
 - The agents reply in the language you write in.
-- `wireframer`, `system-designer`, `market-researcher` and `leadmaker` save their results in an `outputs/` folder inside your project, one folder per agent.
+- `wireframer`, `system-designer`, `market-researcher`, `leadmaker`, `token-generator` and `documenter` save their results in an `outputs/` folder inside your project, one folder per agent.
+- `token-generator` and `documenter` publish to Figma, FigJam or Notion through Claude Code connectors. Without a connector, they deliver the local files and say which destination failed.
+- The agents' memory lives in `~/.claude/agent-memory/<agent>/` on your computer, set by the `memory: user` line in each file's header. Delete that line if you do not want an agent to keep memory.
 
 ## How to install
 
@@ -122,6 +148,8 @@ Use the ux-researcher agent to synthesize the interviews in the research/intervi
     system-designer.md
     market-researcher.md
     leadmaker.md
+    token-generator.md
+    documenter.md
     accessibility-reviewer.md
     design-critic.md
     ux-researcher.md

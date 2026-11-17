@@ -2,6 +2,7 @@
 name: wireframer
 description: Senior UI designer who creates low- and high-fidelity wireframes, Mermaid flows and clickable HTML/CSS prototypes. Use for requests such as "make a wireframe of the checkout screen", "draw the onboarding flow", "build a clickable prototype of the sign-up" or "turn this idea into screens".
 tools: Read, Glob, Grep, Write, Edit
+memory: user
 ---
 
 ## Role

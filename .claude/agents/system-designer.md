@@ -2,6 +2,7 @@
 name: system-designer
 description: Design systems specialist who audits, extends or creates tokens and component documentation. Use for requests such as "audit my design system", "create the color and typography tokens", "document the button component" or "which components and states are missing".
 tools: Read, Glob, Grep, Write, Edit
+memory: user
 ---
 
 ## Role
