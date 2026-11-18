@@ -1,6 +1,6 @@
 # Design Agents for Claude Code
 
-Nine [Claude Code](https://claude.com/claude-code) subagents for day-to-day Product Design work: wireframing, design systems, design tokens, market research, retention research, accessibility review, design critique, UX research and project documentation.
+Eleven [Claude Code](https://claude.com/claude-code) subagents for day-to-day Product Design work: wireframing, design systems, design tokens, visual reference analysis, trend research, market research, retention research, accessibility review, design critique, UX research and project documentation.
 
 Each agent is a text file with instructions. Claude Code reads the file and hands the task to the right agent when you ask.
 
@@ -12,6 +12,8 @@ Each agent is a text file with instructions. Claude Code reads the file and hand
 | `system-designer` | Auditing, extending or creating a design system | Tokens in JSON and CSS variables, component documentation and a changelog |
 | `market-researcher` | Mapping a product's usability friction and benchmarking how competitors solve it | A report with friction map, benchmark table, prioritized opportunities and linked sources |
 | `leadmaker` | Turning interview transcripts into leads for engaging and retaining customers | A qualitative report and a list of leads, each with evidence, hypothesis and how to validate |
+| `reference-analyst` | Reading visual references (images, links, Figma) and finding what they have in common | A reference analysis by color, typography, spacing, shape and imagery, plus a candidate palette and typography with confidence levels |
+| `trend-researcher` | Researching what is changing in a topic on the web, always with source and date | A trend report split into strong signals and bets, with design hypotheses and gaps |
 | `token-generator` | Turning a design system into tokens and sending them to Figma and Notion every time the system changes | Tokens in JSON, CSS variables and a Markdown table, plus Figma variables and a Notion reference page for developers |
 | `documenter` | Documenting a whole agent pipeline, from start to finish, as a report and/or a presentation | A report and/or a presentation, saved to files and published in Notion, Figma, FigJam or Obsidian |
 | `accessibility-reviewer` | Reviewing screens, flows, Figma links, images or front-end code against WCAG 2.2 level AA | A table with the problem, WCAG criterion, severity and suggested fix |
@@ -26,7 +28,9 @@ An agent cannot call another agent. Each one ends its reply with a "Next step" t
 flowchart LR
     lm[leadmaker] -->|hypotheses| mr[market-researcher]
     mr -->|opportunities| wf[wireframer]
-    sd[system-designer] -->|design system| tg[token-generator]
+    ra[reference-analyst] -->|visual direction| sd[system-designer]
+    tr[trend-researcher] -->|trends| mr
+    sd -->|design system| tg[token-generator]
     tg -->|tokens| wf
     wf -->|screens| dc[design-critic]
     wf -->|screens| ar[accessibility-reviewer]
@@ -82,6 +86,22 @@ Imagine several friends stopped coming to your club. You talked to each one and 
 Use the leadmaker agent to analyze the transcripts in research/interviews, with the interview guide in research/guide.md. Niche: fitness. Audience: subscribers who cancelled in the last 3 months. Platform: mobile.
 ```
 
+### reference-analyst
+
+Imagine you cut out photos of several bedrooms you thought were pretty. This agent looks at all the photos together and says: "Almost all of them have light walls, wooden furniture and rounded corners. Only one has a black wall." That way you find out what you really like. When it is not sure, it tells you it is a guess.
+
+```
+Use the reference-analyst agent with these references for the finance app: images in references/, https://example.com and the frame https://www.figma.com/design/...
+```
+
+### trend-researcher
+
+Imagine everyone at school says a new toy is going to be a craze. This agent checks: it reads newspapers, websites and shops, writes down where and when it read each thing, and sorts it into two boxes, "strong signal" and "bet".
+
+```
+Use the trend-researcher agent for the topic "contactless payments in ride-hailing apps", last 12 months, Brazil.
+```
+
 ### token-generator
 
 Imagine the design system is a bakery's recipe book. This agent copies the recipes in two versions: big posters for the people who decorate the cakes (Figma) and recipe cards for the people who bake (Notion). When someone changes a recipe, it updates the posters and the cards together, so nobody uses the old version.
@@ -127,7 +147,7 @@ Use the ux-researcher agent to synthesize the interviews in the research/intervi
 - You can also call an agent with `@`: type `@agent-` and pick the agent from the list.
 - To work from an image, save the file in a folder and give its path.
 - The agents reply in the language you write in.
-- `wireframer`, `system-designer`, `market-researcher`, `leadmaker`, `token-generator` and `documenter` save their results in an `outputs/` folder inside your project, one folder per agent.
+- All agents except the two reviewers save their results in an `outputs/` folder inside your project, one folder per agent.
 - `token-generator` and `documenter` publish to Figma, FigJam or Notion through Claude Code connectors. Without a connector, they deliver the local files and say which destination failed.
 - The agents' memory lives in `~/.claude/agent-memory/<agent>/` on your computer, set by the `memory: user` line in each file's header. Delete that line if you do not want an agent to keep memory.
 
@@ -149,6 +169,8 @@ Use the ux-researcher agent to synthesize the interviews in the research/intervi
     market-researcher.md
     leadmaker.md
     token-generator.md
+    reference-analyst.md
+    trend-researcher.md
     documenter.md
     accessibility-reviewer.md
     design-critic.md
